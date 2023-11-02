@@ -5,10 +5,10 @@ const connectDb = () => {
 	mongoose
 		.connect(process.env.MONGO_URL)
 		.then((connection) => {
-			console.log(`Databse connected successfully at`.bgCyan.black);
+			console.log(`Databse connected successfully`.bgCyan.black);
 		})
 		.catch((error) => {
-			console.log(error);
+			console.log(error).bgCyan;
 		});
 };
 

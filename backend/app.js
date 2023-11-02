@@ -3,6 +3,7 @@ const colors = require("colors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const connectDb = require("./config/databaseConfig");
+const cors = require("cors");
 const app = express();
 
 // Dotenv config
@@ -14,11 +15,16 @@ connectDb();
 // Middlewares
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cors());
 
-// PORT
-const PORT = process.env.PORT || 8080;
+// Imports User Routes
+const userRoutes = require("./routes/userRoutes");
+
+app.use("/api/user", userRoutes);
 
 // Server listening
+// PORT
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
 	console.log(
 		`Server Running in ${process.env.DEV_MODE} mode on port ${process.env.PORT}`
