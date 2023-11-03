@@ -7,8 +7,8 @@ const Hashed = async (password) => {
 };
 
 const VeryfyPassword = async (password, hashedPassword) => {
-	const isMatch = await bcrypt.compare(password, hashedPassword);
-	return isMatch;
+	const match = await bcrypt.compare(password, hashedPassword);
+	return match;
 };
 
 module.exports = {Hashed, VeryfyPassword};
