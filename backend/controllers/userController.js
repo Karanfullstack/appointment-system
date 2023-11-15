@@ -21,11 +21,11 @@ class AuthController {
 			const userData = req.body;
 
 			const {user, token} = await userService.loginUser(userData);
-
+			const {password, ...result} = user._doc;
 			res.status(200).json({
 				success: true,
 				message: "Login Successfully",
-				user,
+				result,
 				token: `Bearer ${token}`,
 			});
 		} catch (error) {
