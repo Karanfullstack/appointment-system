@@ -1,19 +1,38 @@
 import React from "react";
-import {Form, Input, Button} from "antd";
-import {Link} from "react-router-dom";
+import {Form, Input, Button, message} from "antd";
+import {useForm} from "antd/es/form/Form";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 import "../styles/RegisterStyles.css";
+
 const Register = () => {
-	// form handler
-	const onfinishHandler = (values) => {
-		console.log(values);
+	const navigatge = useNavigate();
+	const [form] = useForm(); // to rest fields
+
+	// handelSubmit
+	const onSubmit = async (values) => {
+		try {
+			const response = await axios.post("/api/user/register", values);
+			if (response.data.success) {
+				message.success(response.data.message);
+				form.resetFields();
+				navigatge("/login");
+			} else {
+				message.error(response.data.message);
+			}
+		} catch (error) {
+			console.log(error.message);
+			message.error(error.response.data.message);
+		}
 	};
 
 	return (
 		<div className="form-container">
 			<Form
+				form={form}
 				className="register-form"
 				layout=" vertical"
-				onFinish={onfinishHandler}
+				onFinish={onSubmit}
 			>
 				<h3>Register Form</h3>
 				<label htmlFor="name">Name</label>
@@ -28,7 +47,7 @@ const Register = () => {
 				<Form.Item name="password">
 					<Input type="password" required placeholder="Password" />
 				</Form.Item>
-				<Link>Already user login here</Link>
+				<Link to="/login">Already user login here</Link>
 				<Button type="primary" htmlType="submit">
 					Submit
 				</Button>
