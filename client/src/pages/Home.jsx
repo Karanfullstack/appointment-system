@@ -3,7 +3,6 @@ import axios from "axios";
 
 const Home = () => {
 	// Get Current User
-
 	const getCurrentUser = async () => {
 		try {
 			const response = await axios.get("/api/user/auth", {
@@ -15,10 +14,10 @@ const Home = () => {
 			console.log(error);
 		}
 	};
-
 	useEffect(() => {
 		getCurrentUser();
 	}, []);
+	
 	return <h1>Home Page World</h1>;
 };
 
