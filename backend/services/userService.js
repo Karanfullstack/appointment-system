@@ -1,6 +1,6 @@
 const User = require("../models/userModels");
 const {Hashed, VeryfyPassword} = require("../utils/Hashed");
-const {generateToken, verifyToken} = require("../utils/jwtService");
+const {generateToken} = require("../utils/jwtService");
 
 class UserService {
 	// User Registration
@@ -13,7 +13,6 @@ class UserService {
 			}
 			// Hash password
 			const hashedPassword = await Hashed(userData.password);
-
 			// Create new user
 			const newUser = new User({...userData, password: hashedPassword});
 
@@ -36,6 +35,7 @@ class UserService {
 
 			// check if password is correct
 			const isMatch = await VeryfyPassword(userData.password, user.password);
+			
 			if (!isMatch) throw new Error("Invalid Credentials");
 
 			const {password, ...result} = user._doc;
@@ -60,6 +60,8 @@ class UserService {
 			throw new Error(error);
 		}
 	}
+
+	
 }
 
 module.exports = UserService;

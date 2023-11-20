@@ -19,7 +19,6 @@ class AuthController {
 	static async loginUser(req, res) {
 		try {
 			const userData = req.body;
-
 			const {user, token} = await userService.loginUser(userData);
 			const {password, ...result} = user._doc;
 			res.status(200).json({
@@ -41,7 +40,10 @@ class AuthController {
 			const user = await userService.authenticateUser(id);
 			console.log(req.user);
 			const {password, ...result} = user._doc;
-			res.status(200).json({success: true, result});
+
+			res
+				.status(200)
+				.json({success: true, data: {name: result.name, email: result.email}});
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({success: false, message: error.message});
