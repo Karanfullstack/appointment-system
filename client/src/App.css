@@ -3,3 +3,12 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+
+.spinner {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	z-index: 999;
+	background-color: rgba(0, 0, 0, 0.202);
+}

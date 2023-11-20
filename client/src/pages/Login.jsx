@@ -4,22 +4,28 @@ import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "antd/es/form/Form";
 import "../styles/RegisterStyles.css";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {hideLoading, showLoading} from "../redux/features/loadingSlice";
 
 const Login = () => {
 	const [form] = useForm();
 	const navigate = useNavigate();
-	
+	const dispatch = useDispatch();
+
 	// form submit handler
 	const onfinishHandler = async (values) => {
 		console.log(values);
+		dispatch(showLoading());
 		try {
 			const response = await axios.post("/api/user/login", values);
 			if (response.data.success) {
+				dispatch(hideLoading());
 				message.success(response.data.message);
 				localStorage.setItem("token", response.data.token);
 				navigate("/");
 			}
 		} catch (error) {
+			dispatch(hideLoading());
 			if (error) {
 				message.error(error.response.data.message);
 			}

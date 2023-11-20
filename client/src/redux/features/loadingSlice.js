@@ -8,8 +8,8 @@ export const loadingSlice = createSlice({
 	name: "loading",
 	initialState,
 	reducers: {
-		showLoading: (state, action) => {
-			state.loading = action.payload;
+		showLoading: (state) => {
+			state.loading = true;
 		},
 		hideLoading: (state) => {
 			state.loading = false;
