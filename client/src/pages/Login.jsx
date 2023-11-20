@@ -14,7 +14,6 @@ const Login = () => {
 
 	// form submit handler
 	const onfinishHandler = async (values) => {
-		console.log(values);
 		dispatch(showLoading());
 		try {
 			const response = await axios.post("/api/user/login", values);
@@ -22,8 +21,7 @@ const Login = () => {
 				dispatch(hideLoading());
 				message.success(response.data.message);
 				localStorage.setItem("token", response.data.token);
-				navigate("/");
-			}
+			f}
 		} catch (error) {
 			dispatch(hideLoading());
 			if (error) {
