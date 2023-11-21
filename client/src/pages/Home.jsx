@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import axios from "axios";
+import Layout from "../components/Layout";
 
 const Home = () => {
 	// Get Current User
@@ -17,8 +18,12 @@ const Home = () => {
 	useEffect(() => {
 		getCurrentUser();
 	}, []);
-	
-	return <h1>Home Page World</h1>;
+
+	return (
+		<Layout>
+			<h1>Hello World</h1>
+		</Layout>
+	);
 };
 
 export default Home;

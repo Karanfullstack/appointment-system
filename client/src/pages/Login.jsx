@@ -9,7 +9,6 @@ import {hideLoading, showLoading} from "../redux/features/loadingSlice";
 
 const Login = () => {
 	const [form] = useForm();
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	// form submit handler
@@ -21,7 +20,7 @@ const Login = () => {
 				dispatch(hideLoading());
 				message.success(response.data.message);
 				localStorage.setItem("token", response.data.token);
-			f}
+			}
 		} catch (error) {
 			dispatch(hideLoading());
 			if (error) {
