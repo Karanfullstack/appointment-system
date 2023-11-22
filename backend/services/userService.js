@@ -35,7 +35,7 @@ class UserService {
 
 			// check if password is correct
 			const isMatch = await VeryfyPassword(userData.password, user.password);
-			
+
 			if (!isMatch) throw new Error("Invalid Credentials");
 
 			const {password, ...result} = user._doc;
@@ -45,7 +45,6 @@ class UserService {
 
 			return {user, token};
 		} catch (error) {
-			console.log(error);
 			throw new Error(error);
 		}
 	}
@@ -60,8 +59,6 @@ class UserService {
 			throw new Error(error);
 		}
 	}
-
-	
 }
 
 module.exports = UserService;

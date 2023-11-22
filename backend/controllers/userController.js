@@ -43,7 +43,7 @@ class AuthController {
 
 			res
 				.status(200)
-				.json({success: true, data: {name: result.name, email: result.email}});
+				.json({success: true, data: {result}});
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({success: false, message: error.message});

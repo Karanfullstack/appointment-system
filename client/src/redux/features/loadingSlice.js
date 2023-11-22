@@ -4,7 +4,7 @@ const initialState = {
 	loading: false,
 };
 
-export const loadingSlice = createSlice({
+const loadingSlice = createSlice({
 	name: "loading",
 	initialState,
 	reducers: {
@@ -18,3 +18,4 @@ export const loadingSlice = createSlice({
 });
 
 export const {showLoading, hideLoading} = loadingSlice.actions;
+export default loadingSlice.reducer;

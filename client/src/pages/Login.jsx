@@ -16,12 +16,14 @@ const Login = () => {
 		dispatch(showLoading());
 		try {
 			const response = await axios.post("/api/user/login", values);
+
 			if (response.data.success) {
 				dispatch(hideLoading());
 				message.success(response.data.message);
 				localStorage.setItem("token", response.data.token);
 			}
 		} catch (error) {
+			console.log(error);
 			dispatch(hideLoading());
 			if (error) {
 				message.error(error.response.data.message);
