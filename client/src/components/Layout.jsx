@@ -2,16 +2,21 @@ import "../styles/LayoutStyles.css";
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {AdminMenu, UserMenu} from "../menu-data/MenuData";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {message} from "antd";
+import {setUser} from "../redux/features/userSlice";
 const Layout = ({children}) => {
 	const {user} = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
 	const location = useLocation();
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const sideMenu = user && user.isAdmin ? AdminMenu : UserMenu;
 
 	// logout function
 	const logout = () => {
+		dispatch(setUser(null));
 		localStorage.clear();
+		message.success("Logout Successfully");
 		navigate("/login");
 	};
 	return (

@@ -1,9 +1,10 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {Home, Login, Register} from "./pages";
+import {Home, Login, Register, ApplyDoctor} from "./pages";
 import {useSelector} from "react-redux";
 import Spinner from "./components/Spinner";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import PublicRoutes from "./components/PublicRoutes";
+
 function App() {
 	const {loading} = useSelector((state) => state.loading);
 	return (
@@ -34,6 +35,15 @@ function App() {
 							<PublicRoutes>
 								<Register />
 							</PublicRoutes>
+						}
+					/>
+
+					<Route
+						path="/apply-doctor"
+						element={
+							<ProtectedRoutes>
+								<ApplyDoctor />
+							</ProtectedRoutes>
 						}
 					/>
 				</Routes>

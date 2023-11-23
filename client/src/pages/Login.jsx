@@ -1,6 +1,6 @@
 import React from "react";
 import {Form, Input, Button, message} from "antd";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useForm} from "antd/es/form/Form";
 import "../styles/RegisterStyles.css";
 import axios from "axios";

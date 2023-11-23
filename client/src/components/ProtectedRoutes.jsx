@@ -8,7 +8,7 @@ import axios from "axios";
 const ProtectedRoutes = ({children}) => {
 	const dispatch = useDispatch();
 	const {user} = useSelector((state) => state.auth);
-
+	
 	const currentUser = async () => {
 		try {
 			dispatch(showLoading());
