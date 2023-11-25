@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 
 const doctorSchema = new Schema({
 	userId: {
-		type: String,
+		type: Schema.Types.ObjectId,
+		ref: "User",
 	},
 	firstName: {
-		type: String,
+		type: String, 
 		required: [true, "First name is required"],
 	},
 	lastName: {
@@ -40,12 +41,17 @@ const doctorSchema = new Schema({
 		type: Number,
 		required: [true, "Fees per session is required"],
 	},
+	status: {
+		type: String,
+		default: "pending",
+	},
+
 	timings: {
 		type: Object,
-		required: [true, "Timings is required"],
+		// required: [true, "Timings is required"],
 	},
 });
 
 const Doctor = mongoose.model("Doctor", doctorSchema);
 
-export default Doctor;
+module.exports = Doctor;

@@ -5,8 +5,10 @@ import {AdminMenu, UserMenu} from "../menu-data/MenuData";
 import {useSelector, useDispatch} from "react-redux";
 import {message} from "antd";
 import {setUser} from "../redux/features/userSlice";
+
 const Layout = ({children}) => {
 	const {user} = useSelector((state) => state.auth);
+
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -19,13 +21,14 @@ const Layout = ({children}) => {
 		message.success("Logout Successfully");
 		navigate("/login");
 	};
+
 	return (
 		<div className="main">
 			<div className="layout">
 				{/* Side Bar Section */}
 				<div className="sidebar">
 					<div className="logo">
-						<h5>Doc App</h5>
+						<h5>DOC APP</h5>
 						<hr />
 					</div>
 					<div className="menu">

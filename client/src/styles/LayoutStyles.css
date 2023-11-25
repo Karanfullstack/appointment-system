@@ -6,7 +6,7 @@
 	display: flex;
 }
 .sidebar {
-	min-height: 100%;
+	height: 600px;
 	width: 300px;
 	border-radius: 5px;
 	background-color: rgb(51, 1, 1);
@@ -75,8 +75,16 @@
 }
 
 .body {
-	height: 80vh;
+	height: 100%;
 	margin-bottom: 20px;
 	box-shadow: 0 0 2px gray;
 	background-color: white;
+}
+
+.dark-body {
+	background-color: rgba(31, 31, 31, 0.849);
+	height: 100%;
+	margin-bottom: 20px;
+	box-shadow: 0 0 2px gray;
+	color: white;
 }

@@ -21,6 +21,10 @@ app.use(cors());
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/user", userRoutes);
 
+// Imports Doctor Routes
+const doctorRoutes = require("./routes/doctorRoutes");
+app.use("/api/doctor", doctorRoutes);
+
 // Server listening
 // PORT
 const PORT = process.env.PORT || 8080;

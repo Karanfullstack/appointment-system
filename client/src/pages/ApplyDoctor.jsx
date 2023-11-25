@@ -8,6 +8,7 @@ const ApplyDoctor = () => {
 	const handelSubmit = (values) => {
 		console.log(values);
 	};
+	
 	return (
 		<Layout>
 			<div className="doctor-form-container">
@@ -121,7 +122,7 @@ const ApplyDoctor = () => {
 								required
 								rules={[{required: true}]}
 							>
-								<TimePicker.RangePicker />
+								<TimePicker.RangePicker format="HH:mm" />
 							</Form.Item>
 						</Col>
 					</Row>
