@@ -1,14 +1,37 @@
 import React from "react";
 import Layout from "../components/Layout";
-import {Button, Col, Form, Input, Row, TimePicker} from "antd";
+import {Button, Col, Form, Input, Row, TimePicker, message} from "antd";
 import "../styles/DoctorApplyForm.css";
-
+import axios from "axios";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {showLoading, hideLoading} from "../redux/features/loadingSlice";
+f
 const ApplyDoctor = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
 	// handel submit
-	const handelSubmit = (values) => {
-		console.log(values);
+	const handelSubmit = async (values) => {
+		try {
+			dispatch(showLoading());
+			const response = await axios.post("/api/doctor/apply-doctor", values, {
+				headers: {
+					Authorization: localStorage.getItem("token"),
+				},
+			});
+			console.log(response);
+			dispatch(hideLoading());
+			if (response.status === 201) {
+				message.success("Applied Successfully");
+				navigate("/");
+			}
+		} catch (error) {
+			dispatch(hideLoading());
+			console.log(error);
+		}
 	};
-	
+
 	return (
 		<Layout>
 			<div className="doctor-form-container">

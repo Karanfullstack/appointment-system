@@ -4,6 +4,7 @@ class ApplyDoctorController {
 	static async applyDoctor(req, res) {
 		try {
 			const userId = req.user.id;
+			
 			const doctor = await DoctorService.applyDoctor({...req.body, userId});
 			res
 				.status(201)

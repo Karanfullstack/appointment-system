@@ -3,12 +3,12 @@ import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {AdminMenu, UserMenu} from "../menu-data/MenuData";
 import {useSelector, useDispatch} from "react-redux";
-import {message} from "antd";
+import {message, Badge} from "antd";
 import {setUser} from "../redux/features/userSlice";
 
 const Layout = ({children}) => {
 	const {user} = useSelector((state) => state.auth);
-
+	console.log(user);
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -55,7 +55,10 @@ const Layout = ({children}) => {
 				<div className="content">
 					<div className="header">
 						<div className="header-content">
-							<i className="fa-solid fa-bell"></i>
+							<Badge count={user && user.notification.length}>
+								<i className="fa-solid fa-bell mt-2"></i>
+							</Badge>
+
 							<Link to="/profile">{user && user.email}</Link>
 						</div>
 					</div>
