@@ -25,6 +25,10 @@ app.use("/api/user", userRoutes);
 const doctorRoutes = require("./routes/doctorRoutes");
 app.use("/api/doctor", doctorRoutes);
 
+// Imports Notification Routes
+const notificationRoutes = require("./routes/notificationRoutes");
+app.use("/api/notification", notificationRoutes);
+
 // Server listening
 // PORT
 const PORT = process.env.PORT || 8080;

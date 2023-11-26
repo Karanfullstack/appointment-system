@@ -8,7 +8,7 @@ import {setUser} from "../redux/features/userSlice";
 
 const Layout = ({children}) => {
 	const {user} = useSelector((state) => state.auth);
-	console.log(user);
+
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -55,8 +55,14 @@ const Layout = ({children}) => {
 				<div className="content">
 					<div className="header">
 						<div className="header-content">
-							<Badge count={user && user.notification.length}>
-								<i className="fa-solid fa-bell mt-2"></i>
+							<Badge
+								count={user && user.notification.length}
+								onClick={() => navigate("/notification")}
+							>
+								<i
+									className="fa-solid fa-bell mt-2"
+									style={{cursor: "pointer"}}
+								></i>
 							</Badge>
 
 							<Link to="/profile">{user && user.email}</Link>

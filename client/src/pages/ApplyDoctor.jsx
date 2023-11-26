@@ -6,7 +6,7 @@ import axios from "axios";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {showLoading, hideLoading} from "../redux/features/loadingSlice";
-f
+
 const ApplyDoctor = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -31,6 +31,7 @@ const ApplyDoctor = () => {
 			console.log(error);
 		}
 	};
+
 
 	return (
 		<Layout>

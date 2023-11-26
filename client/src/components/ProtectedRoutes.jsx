@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Navigate} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import {showLoading, hideLoading} from "../redux/features/loadingSlice";
-import {setUser} from "../redux/features/userSlice";
+import {setUser, refetchUser} from "../redux/features/userSlice";
 import axios from "axios";
 
 const ProtectedRoutes = ({children}) => {
@@ -18,7 +18,7 @@ const ProtectedRoutes = ({children}) => {
 				},
 			});
 			dispatch(hideLoading());
-			
+
 			if (response.data.success) {
 				dispatch(setUser(response.data.data.result));
 			} else {
@@ -36,7 +36,7 @@ const ProtectedRoutes = ({children}) => {
 		if (!user) {
 			currentUser();
 		}
-	}, [user]);
+	}, [user, refetchUser]);
 
 	if (localStorage.getItem("token")) {
 		return children;
