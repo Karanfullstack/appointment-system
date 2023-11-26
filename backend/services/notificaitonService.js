@@ -14,6 +14,17 @@ class notificationService {
 			throw new Error(error);
 		}
 	}
+
+	// Clear all notification
+	static async clearNotification(userId) {
+		try {
+			const user = await User.findById(userId);
+			user.seennotification = [];
+			await user.save();
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
 }
 
 module.exports = notificationService;

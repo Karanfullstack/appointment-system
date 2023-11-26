@@ -10,7 +10,7 @@ const Notification = () => {
 	const {user} = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
-	// notification push to seennotification
+	// notification push to seennotification Function
 	const notification = async () => {
 		try {
 			dispatch(showLoading());
@@ -29,6 +29,30 @@ const Notification = () => {
 			message.success("Notification Marked");
 		} catch (error) {
 			console.log(error);
+			dispatch(hideLoading());
+		}
+	};
+
+	// clear notification Function
+	const clearNotification = async () => {
+		try {
+			const respnose = await axios.put(
+				"/api/notification/clear",
+				{},
+				{
+					headers: {
+						Authorization: localStorage.getItem("token"),
+					},
+				}
+			);
+
+			dispatch(refetchUser());
+			dispatch(hideLoading());
+			message.success("Notification Cleared");
+			console.log(respnose);
+		} catch (error) {
+			console.log(error.message);
+			dispatch(hideLoading());
 		}
 	};
 
@@ -41,7 +65,7 @@ const Notification = () => {
 				<div>
 					<div className="d-flex justify-content-end">
 						<h5 className="" style={{cursor: "pointer"}} onClick={notification}>
-							MARK NOTIFICATION
+							{user && user.notification.length > 0 && "MARK AS READ"}
 						</h5>
 					</div>
 					{user &&
@@ -59,7 +83,13 @@ const Notification = () => {
 			children: (
 				<div>
 					<div className="d-flex justify-content-end">
-						<h5 className="">CLEAR NOTIFICATION</h5>
+						<h5
+							className=""
+							style={{cursor: "pointer"}}
+							onClick={clearNotification}
+						>
+							{user && user.seennotification.length > 0 && "CLEAR NOTIFICATION"}
+						</h5>
 					</div>
 					{user &&
 						user.seennotification.map((item, index) => (
@@ -74,7 +104,7 @@ const Notification = () => {
 
 	return (
 		<Layout>
-			<h4 className="text-center p-2">Notification Page</h4>
+			<h4 className="text-center p-4">Notification Page</h4>
 			<Tabs
 				className="p-2"
 				defaultActiveKey={"1"}
