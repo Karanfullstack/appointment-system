@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {Home, Login, Register, ApplyDoctor} from "./pages";
+import {Home, Login, Register, ApplyDoctor, Users, Doctors} from "./pages";
 import {useSelector} from "react-redux";
 import Spinner from "./components/Spinner";
 import ProtectedRoutes from "./components/ProtectedRoutes";
@@ -53,6 +53,24 @@ function App() {
 						element={
 							<ProtectedRoutes>
 								<Notification />
+							</ProtectedRoutes>
+						}
+					/>
+
+					<Route
+						path="admin/users"
+						element={
+							<ProtectedRoutes>
+								<Users />
+							</ProtectedRoutes>
+						}
+					/>
+
+					<Route
+						path="admin/doctors"
+						element={
+							<ProtectedRoutes>
+								<Doctors />
 							</ProtectedRoutes>
 						}
 					/>
