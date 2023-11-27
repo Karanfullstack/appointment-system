@@ -5,7 +5,9 @@ class AdminService {
 	// Get All Users List
 	static async getAllUsers() {
 		try {
-			const users = await User.find({});
+			const users = await User.find({isAdmin: {$ne: "true"}}).select(
+				"-password"
+			);
 			return users;
 		} catch (error) {
 			throw error;
