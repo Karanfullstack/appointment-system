@@ -5,6 +5,7 @@ import Spinner from "./components/Spinner";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import PublicRoutes from "./components/PublicRoutes";
 import Notification from "./pages/Notification";
+import DoctorProfile from "./pages/DoctorProfile";
 
 function App() {
 	const {loading} = useSelector((state) => state.loading);
@@ -62,6 +63,15 @@ function App() {
 						element={
 							<ProtectedRoutes>
 								<Users />
+							</ProtectedRoutes>
+						}
+					/>
+
+					<Route
+						path="profile/:id"
+						element={
+							<ProtectedRoutes>
+								<DoctorProfile />
 							</ProtectedRoutes>
 						}
 					/>

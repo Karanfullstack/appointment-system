@@ -43,8 +43,8 @@ class AdminService {
 				message: `Your Doctor Account Request Has ${status}`,
 				onClick: "/notification",
 			});
-			user.isDoctor = doctor.status === "approved" ? true : false;
-	
+			user.isDoctor = status === "approved" ? true : false;
+
 			await user.save();
 
 			return doctor;

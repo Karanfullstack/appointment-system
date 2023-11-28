@@ -1,7 +1,7 @@
 import "../styles/LayoutStyles.css";
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {AdminMenu, UserMenu} from "../menu-data/MenuData";
+import {AdminMenu, UserMenu, DoctorMenu} from "../menu-data/MenuData";
 import {useSelector, useDispatch} from "react-redux";
 import {message, Badge} from "antd";
 import {setUser} from "../redux/features/userSlice";
@@ -12,7 +12,31 @@ const Layout = ({children}) => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
-	const sideMenu = user && user.isAdmin ? AdminMenu : UserMenu;
+
+	// DoctorMenu
+	const DoctorMenu = [
+		{
+			name: "Home",
+			path: "/",
+			icon: "fa-solid fa-house",
+		},
+
+		{
+			name: "Appointments",
+			path: "/appointments",
+			icon: "fa-solid fa-list",
+		},
+
+		{
+			name: "Profile",
+			path: `/profile/${user && user._id}`,
+			icon: "fa-solid fa-user",
+		},
+	];
+
+	
+	const sideMenu =
+		user && user.isAdmin ? AdminMenu : user?.isDoctor ? DoctorMenu : UserMenu;
 
 	// logout function
 	const logout = () => {
