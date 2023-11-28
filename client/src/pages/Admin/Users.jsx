@@ -34,18 +34,24 @@ const Users = () => {
 			title: "Name",
 			dataIndex: "name",
 			key: "name",
+			render: (text, record) => {
+				return <span>{record.name.toUpperCase()}</span>;
+			},
 		},
 		{
 			title: "Email",
 			dataIndex: "email",
 			key: "email",
+			render: (text, record) => {
+				return <span>{record.email.toUpperCase()}</span>;
+			},
 		},
 
 		{
 			title: "Doctor",
 			dataIndex: "isDoctor",
 			key: "isDoctor",
-			render: (text, record) => <span>{record.isDoctor ? "Yes" : "No"}</span>,
+			render: (text, record) => <span>{record.isDoctor ? "YES" : "NO"}</span>,
 		},
 		{
 			title: "Actions",
@@ -58,11 +64,11 @@ const Users = () => {
 			),
 		},
 	];
-	
+
 	return (
 		<Layout>
 			<h1 className="text-center p-3">Admin Users</h1>
-			<Table columns={columns} dataSource={users} />
+			<Table className="p-3" columns={columns} dataSource={users} />
 		</Layout>
 	);
 };

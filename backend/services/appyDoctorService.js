@@ -4,8 +4,13 @@ const Doctor = require("../models/doctorModels");
 class DoctorService {
 	static async applyDoctor(data) {
 		try {
-			const doctor = new Doctor(data);
-			await doctor.save();
+			// checking if user applied for doctor
+			const doctor = await Doctor.findOne({userId: data.userId});
+
+			if (doctor) throw new Error("You already applied for doctor.");
+
+			const newDoctor = new Doctor(data);
+			await newDoctor.save();
 
 			// getting admin user
 			const adminUser = await User.findOne({isAdmin: true});
@@ -26,7 +31,7 @@ class DoctorService {
 			await User.findOneAndUpdate(adminUser._id, {notification});
 
 			// returning doctor
-			return doctor;
+			return newDoctor;
 		} catch (error) {
 			throw new Error(error);
 		}

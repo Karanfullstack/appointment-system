@@ -29,9 +29,9 @@ const ApplyDoctor = () => {
 		} catch (error) {
 			dispatch(hideLoading());
 			console.log(error);
+			message.error(error.response.data.error);
 		}
 	};
-
 
 	return (
 		<Layout>
