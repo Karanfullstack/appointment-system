@@ -9,6 +9,7 @@ import moment from "moment";
 
 const DoctorProfile = () => {
 	const [doctor, setDoctor] = useState(null);
+	const [flag, setFlag] = useState(0);
 
 	// Get doctor's info from database
 	const getDoctorInfo = async () => {
@@ -20,7 +21,6 @@ const DoctorProfile = () => {
 			});
 
 			if (response.status === 200) {
-				console.log(response);
 				setDoctor(response.data.data);
 			}
 		} catch (error) {
@@ -29,20 +29,40 @@ const DoctorProfile = () => {
 	};
 	useEffect(() => {
 		getDoctorInfo();
-	}, []);
+	}, [flag]);
 
 	// Update doctor's info
 	const updateDoctorInfo = async (values) => {
-		console.log([
-			moment(values.timings[0]).format("HH:mm"),
-			moment(values.timings[1]).format("HH:mm"),
-		]);
+		try {
+			const response = await axios.put(
+				"/api/doctor/update-doctor",
+				{
+					...values,
+					timings: [
+						values.timings[0].format("HH:mm"),
+						values.timings[1].format("HH:mm"),
+					],
+				},
+				{
+					headers: {
+						Authorization: localStorage.getItem("token"),
+					},
+				}
+			);
+			if (response.status === 200) {
+				setFlag((prev) => prev + 1);
+				message.success("Doctor Updated");
+				console.log(response);
+			}
+		} catch (error) {
+			console.log(error.message);
+		}
 	};
-	console.log(doctor);
+
 	return (
 		<Layout>
 			<div className="doctor-form-container">
-				<h1>PROFILE MANAGEMENT</h1>
+				<h1>PROFILE MANAGEMENT {doctor && doctor.lastName}</h1>
 				{doctor && (
 					<Form
 						onFinish={updateDoctorInfo}
