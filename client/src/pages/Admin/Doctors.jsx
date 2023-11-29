@@ -122,7 +122,7 @@ const Doctors = () => {
 
 	return (
 		<Layout>
-			<h1 className="text-center p-3">Admin Doctors</h1>
+			<h1 className="text-center p-3">Admin For Physician</h1>
 			<Table columns={columns} dataSource={doctors} />
 		</Layout>
 	);

@@ -34,7 +34,6 @@ const Layout = ({children}) => {
 		},
 	];
 
-	
 	const sideMenu =
 		user && user.isAdmin ? AdminMenu : user?.isDoctor ? DoctorMenu : UserMenu;
 
@@ -52,7 +51,7 @@ const Layout = ({children}) => {
 				{/* Side Bar Section */}
 				<div className="sidebar">
 					<div className="logo">
-						<h5>DOC APP</h5>
+						<h5>MEDIC APP</h5>
 						<hr />
 					</div>
 					<div className="menu">

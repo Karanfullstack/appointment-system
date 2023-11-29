@@ -30,8 +30,8 @@ export const AdminMenu = [
 	},
 
 	{
-		name: "Doctors",
-		path: "/admin/doctors",
+		name: "Physician",
+		path: "/admin/physician",
 		icon: "fa-solid fa-list",
 	},
 

@@ -2,9 +2,6 @@ import React, {useEffect, useState} from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
 import {Button, Col, Form, Input, Row, TimePicker, message} from "antd";
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {showLoading, hideLoading} from "../redux/features/loadingSlice";
 import moment from "moment";
 
 const DoctorProfile = () => {
@@ -62,7 +59,7 @@ const DoctorProfile = () => {
 	return (
 		<Layout>
 			<div className="doctor-form-container">
-				<h1>PROFILE MANAGEMENT {doctor && doctor.lastName}</h1>
+				<h2 className="text-center mt-2 mb-4"> PHYSICIAN PROFILE </h2>
 				{doctor && (
 					<Form
 						onFinish={updateDoctorInfo}

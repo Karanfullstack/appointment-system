@@ -19,4 +19,10 @@ router.put(
 	DoctorController.updateDoctorController
 );
 
+// Get Approved Doctor List Route || GET
+router.get(
+	"/get-approved-doctor-list",
+	authMiddleware,
+	DoctorController.getApprovedDoctorController
+);
 module.exports = router;

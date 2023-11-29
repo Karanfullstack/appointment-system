@@ -15,11 +15,21 @@ const ApplyDoctor = () => {
 	const handelSubmit = async (values) => {
 		try {
 			dispatch(showLoading());
-			const response = await axios.post("/api/doctor/apply-doctor", values, {
-				headers: {
-					Authorization: localStorage.getItem("token"),
+			const response = await axios.post(
+				"/api/doctor/apply-doctor",
+				{
+					...values,
+					timings: [
+						values.timings[0].format("HH:mm"),
+						values.timings[1].format("HH:mm"),
+					],
 				},
-			});
+				{
+					headers: {
+						Authorization: localStorage.getItem("token"),
+					},
+				}
+			);
 			console.log(response);
 			dispatch(hideLoading());
 			if (response.status === 201) {

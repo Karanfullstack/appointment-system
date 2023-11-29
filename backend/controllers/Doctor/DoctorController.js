@@ -27,5 +27,17 @@ class DoctorController {
 			return res.status(500).json({status: 500, message: error.message});
 		}
 	}
+
+	// Getting approved doctor list
+	static async getApprovedDoctorController(req, res) {
+		try {
+			const doctor = await DoctorService.getApprovedDoctor();
+			return res
+				.status(200)
+				.json({status: 200, message: "Approved Doctor List", data: doctor});
+		} catch (error) {
+			return res.status(500).json({status: 500, message: error.message});
+		}
+	}
 }
 module.exports = DoctorController;
