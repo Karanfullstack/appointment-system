@@ -61,5 +61,15 @@ class DoctorService {
 			throw error;
 		}
 	}
+
+	// Get Doctor By Id (Appointment)
+	static async getDoctorById(doctorId) {
+		try {
+			const doctor = await Doctor.findById(doctorId);
+			return doctor;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 module.exports = DoctorService;

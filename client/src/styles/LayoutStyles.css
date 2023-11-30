@@ -78,7 +78,7 @@
 }
 
 .body {
-	height: 100%;
+	 min-height: 550px;
 	margin-bottom: 20px;
 	box-shadow: 0 0 2px gray;
 	background-color: white;

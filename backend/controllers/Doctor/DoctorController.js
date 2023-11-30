@@ -39,5 +39,18 @@ class DoctorController {
 			return res.status(500).json({status: 500, message: error.message});
 		}
 	}
+
+	// Get Doctor By Id (Appointment)
+	static async getDoctorByIdController(req, res) {
+		try {
+			const {id} = req.params;
+			const doctor = await DoctorService.getDoctorById(id);
+			return res
+				.status(200)
+				.json({status: 200, message: "Doctor found", data: doctor});
+		} catch (error) {
+			return res.status(500).json({status: 500, message: error.message});
+		}
+	}
 }
 module.exports = DoctorController;

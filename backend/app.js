@@ -33,7 +33,9 @@ app.use("/api/notification", notificationRoutes);
 const adminRoutes = require("./routes/Admin/AdminRoutes");
 app.use("/api/admin", adminRoutes);
 
-
+// Imports Appointment Routes
+const appointmentRoutes = require("./routes/Appointment/AppointmentRoute");
+app.use("/api/appointment", appointmentRoutes);
 
 // Server listening
 // PORT

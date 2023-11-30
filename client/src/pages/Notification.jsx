@@ -1,9 +1,8 @@
 import React from "react";
 import Layout from "../components/Layout";
-import {Tabs, message} from "antd";
+import {Tabs, message, List} from "antd";
 import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
-import {showLoading, hideLoading} from "../redux/features/loadingSlice";
 import {refetchUser} from "../redux/features/userSlice";
 
 const Notification = () => {
@@ -13,7 +12,6 @@ const Notification = () => {
 	// notification push to seennotification Function
 	const notification = async () => {
 		try {
-			dispatch(showLoading());
 			const response = await axios.put(
 				"/api/notification/read",
 				{},
@@ -24,7 +22,7 @@ const Notification = () => {
 				}
 			);
 			dispatch(refetchUser());
-			dispatch(hideLoading());
+
 			console.log(response);
 			message.success("Notification Marked");
 		} catch (error) {
@@ -70,8 +68,15 @@ const Notification = () => {
 					</div>
 					{user &&
 						user.notification.map((item, index) => (
-							<div key={index}>
-								<h6>{item.message}</h6>
+							<div key={index} className="pd-3">
+								<List itemLayout="horizontal">
+									<List.Item>
+										<List.Item.Meta
+											title={<a href="https://ant.design">{item.message}</a>}
+											description={item.type}
+										/>
+									</List.Item>
+								</List>
 							</div>
 						))}
 				</div>
@@ -93,8 +98,15 @@ const Notification = () => {
 					</div>
 					{user &&
 						user.seennotification.map((item, index) => (
-							<div key={index}>
-								<h6>{item.message}</h6>
+							<div key={index} className="pd-3">
+								<List itemLayout="horizontal">
+									<List.Item>
+										<List.Item.Meta
+											title={<a href="https://ant.design">{item.message}</a>}
+											description={item.type}
+										/>
+									</List.Item>
+								</List>
 							</div>
 						))}
 				</div>
@@ -106,7 +118,7 @@ const Notification = () => {
 		<Layout>
 			<h4 className="text-center p-4">Notification Page</h4>
 			<Tabs
-				className="p-2"
+				className="p-4"
 				defaultActiveKey={"1"}
 				animated={true}
 				size="large"

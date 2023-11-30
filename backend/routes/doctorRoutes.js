@@ -25,4 +25,11 @@ router.get(
 	authMiddleware,
 	DoctorController.getApprovedDoctorController
 );
+
+// Get Doctor By Id (Appointment Page) Route || GET
+router.get(
+	"/get-doctor/:id",
+	authMiddleware,
+	DoctorController.getDoctorByIdController
+);
 module.exports = router;

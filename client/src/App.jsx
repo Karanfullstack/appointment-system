@@ -6,6 +6,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import PublicRoutes from "./components/PublicRoutes";
 import Notification from "./pages/Notification";
 import DoctorProfile from "./pages/DoctorProfile";
+import BookingPage from "./pages/BookingPage";
 
 function App() {
 	const {loading} = useSelector((state) => state.loading);
@@ -81,6 +82,15 @@ function App() {
 						element={
 							<ProtectedRoutes>
 								<Doctors />
+							</ProtectedRoutes>
+						}
+					/>
+
+					<Route
+						path="/doctor/book-appointment/:doctorId"
+						element={
+							<ProtectedRoutes>
+								<BookingPage />
 							</ProtectedRoutes>
 						}
 					/>

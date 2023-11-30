@@ -11,13 +11,13 @@ const ProtectedRoutes = ({children}) => {
 
 	const currentUser = async () => {
 		try {
-			dispatch(showLoading());
+			// dispatch(showLoading());
 			const response = await axios.get("/api/user/auth", {
 				headers: {
 					Authorization: localStorage.getItem("token"),
 				},
 			});
-			dispatch(hideLoading());
+			// dispatch(hideLoading());
 
 			if (response.data.success) {
 				dispatch(setUser(response.data.data.result));
