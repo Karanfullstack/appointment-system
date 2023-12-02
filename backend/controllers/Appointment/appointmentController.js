@@ -14,6 +14,20 @@ class AppointmentController {
 			return res.status(500).json({status: 500, message: error});
 		}
 	}
+
+	// Checking Appointment Availbility
+	static async checkAvailbility(req, res) {
+		try {
+			const {time, date} = req.body;
+			const isAvailable = await AppointmentService.checkAvailbility(time, date);
+			return res.status(200).json({
+				data: isAvailable,
+				message: "Successfully checked appointment",
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}
 }
 
 module.exports = AppointmentController;

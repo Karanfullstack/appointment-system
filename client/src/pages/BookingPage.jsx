@@ -5,7 +5,7 @@ import {Row, Col, Card, DatePicker, TimePicker, Button, message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {showLoading, hideLoading} from "../redux/features/loadingSlice";
 import axios from "axios";
-
+import moment from "moment";
 const BookingPage = () => {
 	const {user} = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
@@ -14,8 +14,8 @@ const BookingPage = () => {
 	const [dates, setDates] = useState(null || []);
 	const [time, setTime] = useState(null);
 	const {doctorId} = useParams();
-	console.log(dates && dates);
-	console.log(time && time);
+	console.log("date", dates);
+	console.log("time", time);
 	// Get Doctor Details By ID
 	const getDoctorDetails = async () => {
 		try {
@@ -65,6 +65,7 @@ const BookingPage = () => {
 			dispatch(hideLoading());
 		}
 	};
+
 	return (
 		<Layout>
 			{doctor && (
@@ -118,7 +119,7 @@ const BookingPage = () => {
 								<DatePicker
 									format="DD-MM-YYYY"
 									onChange={(value) =>
-										setDates(value && value.format("DD-MM-YYYY"))
+										setDates(value && value.format("YYYY-MM-DD"))
 									}
 								/>
 								<TimePicker

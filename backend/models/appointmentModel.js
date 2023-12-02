@@ -20,7 +20,7 @@ const appointmentSchema = new Schema(
 			required: true,
 		},
 		date: {
-			type: String,
+			type: Date,
 			required: true,
 		},
 		status: {
@@ -30,7 +30,7 @@ const appointmentSchema = new Schema(
 		},
 
 		time: {
-			type: String,
+			type: Date,
 			required: true,
 		},
 	},

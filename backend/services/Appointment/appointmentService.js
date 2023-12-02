@@ -1,17 +1,19 @@
 const Appointment = require("../../models/appointmentModel");
 const User = require("../../models/userModels");
-const Doctor = require("../../models/doctorModels");
+const moment = require("moment");
+
 class AppointmentService {
 	static async createAppointment(appointment) {
 		console.log(appointment);
 		try {
+			console.log(appointment.time);
 			const newAppointment = new Appointment({
 				userId: appointment.userId,
 				doctorId: appointment.doctorId,
 				userInfo: appointment.userInfo,
 				doctorInfo: appointment.doctorInfo,
-				date: appointment.date,
-				time: appointment.time,
+				date: moment.utc(appointment.date, "YYYY-MM-DD").toISOString(),
+				time: moment.utc(appointment.time, "HH:mm", "UTC").toISOString(),
 			});
 
 			const user = await User.findOne({_id: newAppointment.userId});
@@ -40,6 +42,34 @@ class AppointmentService {
 			await user.save();
 			await doctor.save();
 			return newAppointment;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	// Checking Appointment Availbility
+	static async checkAvailbility(time, date) {
+		try {
+			// converting time and date to ISOString
+			const isoTime = moment.utc(time, "HH:mm").format();
+			const isoDate = moment.utc(date, "DD-MM-YYYY").toISOString();
+
+			// checking time before and after 1 hour
+			const oneHourAfter = moment(isoTime).add(1, "hours").toISOString();
+			const oneHourBefore = moment(isoTime).subtract(1, "hours").toISOString();
+
+			// checking if appointment is already booked on the basis of date and time
+			const appointment = await Appointment.findOne({
+				date: isoDate,
+				time: {
+					$gte: oneHourBefore,
+					$lt: oneHourAfter,
+				},
+			});
+
+			const isAvailable = !appointment;
+			console.log(isAvailable);
+			return {isAvailable, appointment};
 		} catch (error) {
 			throw error;
 		}
