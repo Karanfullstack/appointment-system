@@ -4,12 +4,14 @@ import {useParams} from "react-router-dom";
 import {Row, Col, Card, DatePicker, TimePicker, Button, message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {showLoading, hideLoading} from "../redux/features/loadingSlice";
+import {PoweroffOutlined} from "@ant-design/icons";
 import axios from "axios";
-import moment from "moment";
+
 const BookingPage = () => {
+	const [loading, setLoading] = useState(false);
+	const [isAvilable, setIsAvilable] = useState(false);
 	const {user} = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
-	console.log(user);
 	const [doctor, setDoctor] = useState(null);
 	const [dates, setDates] = useState(null || []);
 	const [time, setTime] = useState(null);
@@ -24,7 +26,7 @@ const BookingPage = () => {
 					Authorization: localStorage.getItem("token"),
 				},
 			});
-			console.log(response.data);
+
 			if (response.status === 200) setDoctor(response.data.data);
 		} catch (error) {
 			console.log(error);
@@ -57,7 +59,6 @@ const BookingPage = () => {
 			);
 			if (response.status === 200) {
 				dispatch(hideLoading());
-				console.log(response.data);
 				message.success("Appointment Booked Successfully");
 			}
 		} catch (error) {
@@ -66,6 +67,48 @@ const BookingPage = () => {
 		}
 	};
 
+	// checking Availibility
+	const checkAvailibility = async () => {
+		try {
+			setLoading(true);
+			const response = await axios.post(
+				"/api/appointment/check",
+				{
+					date: dates,
+					time: time,
+				},
+				{
+					headers: {
+						Authorization: localStorage.getItem("token"),
+					},
+				}
+			);
+
+			setTimeout(() => {
+				setLoading(false);
+				setIsAvilable(response.data.data.isAvailable);
+				if (response.data.data.isAvailable) {
+					message.success("Slot is Available");
+				} else {
+					message.error("Slot is not Available");
+				}
+				console.log(response.data.data.isAvailable);
+			}, 4000);
+		} catch (error) {
+			setLoading(false);
+			console.log(error);
+		}
+	};
+
+	// function for dates and time not to be empty or null
+	const isEmpty = (dates, time) => {
+		if (dates === null || time === null) {
+			return true;
+		}
+		return false;
+	};
+
+	console.log(isEmpty(dates, time));
 	return (
 		<Layout>
 			{doctor && (
@@ -118,19 +161,35 @@ const BookingPage = () => {
 							<div className="d-flex gap-3 mb-3">
 								<DatePicker
 									format="DD-MM-YYYY"
-									onChange={(value) =>
-										setDates(value && value.format("YYYY-MM-DD"))
-									}
+									onChange={(value) => {
+										setDates(value && value.format("DD-MM-YYYY"));
+										setIsAvilable(false);
+									}}
 								/>
 								<TimePicker
-									onChange={(values) =>
-										setTime(values && values.format("HH:mm"))
-									}
+									onChange={(values) => {
+										setTime(values && values.format("HH:mm"));
+										setIsAvilable(false);
+									}}
 								/>
 							</div>
 							<div className="d-flex gap-3">
-								<Button>Check Availibility</Button>
-								<Button onClick={bookAppointment}>Book Now</Button>
+								{loading ? (
+									<Button disabled icon={<PoweroffOutlined />} loading>
+										Checking...
+									</Button>
+								) : (
+									<Button
+										disabled={isEmpty(dates, time)}
+										onClick={checkAvailibility}
+									>
+										Check Availibility
+									</Button>
+								)}
+
+								<Button disabled={!isAvilable} onClick={bookAppointment}>
+									Book Now
+								</Button>
 							</div>
 						</Col>
 					</Row>
