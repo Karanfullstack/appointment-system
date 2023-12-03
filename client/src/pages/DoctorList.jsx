@@ -1,16 +1,17 @@
 import React from "react";
 import {Button, Card, Col, Row} from "antd";
 import {useNavigate} from "react-router-dom";
+
 const DoctorList = ({doctor}) => {
 	const navigate = useNavigate();
 
 	return (
 		<div>
 			<h2 className="mb-4 text-center">Physicians List</h2>
-			
-			<Row gutter={16}>
+
+			<Row gutter={[24, 24]}>
 				{doctor.map((doctor) => (
-					<Col key={doctor._id} span={4}>
+					<Col key={doctor._id} span={12}>
 						<Card
 							title={`DR. ${doctor.firstName.toUpperCase()} `}
 							style={{

@@ -27,7 +27,6 @@ const Notification = () => {
 			message.success("Notification Marked");
 		} catch (error) {
 			console.log(error);
-			dispatch(hideLoading());
 		}
 	};
 

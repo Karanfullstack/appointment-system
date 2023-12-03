@@ -3,7 +3,8 @@ const AppointmentService = require("../../services/Appointment/appointmentServic
 class AppointmentController {
 	static async createAppointment(req, res) {
 		try {
-			const appointment = await AppointmentService.createAppointment(req.body);
+			const userId = req.body.id;
+			const appointment = await AppointmentService.createAppointment(req.body,userId);
 			return res.status(200).json({
 				status: 200,
 				data: appointment,
@@ -47,6 +48,26 @@ class AppointmentController {
 			});
 		} catch (error) {
 			return res.status(500).json({status: 500, message: error});
+		}
+	}
+
+	// getting all appointments for doctor
+	static async getDoctorAppoinments(req, res) {
+		try {
+			const userId = req.user.id;
+			const doctor = await AppointmentService.getDoctorAppointments(userId);
+			if (!doctor) {
+				return res
+					.status(404)
+					.json({status: 404, message: "No appointments found"});
+			}
+			return res.status(200).json({
+				status: 200,
+				data: doctor,
+				message: "Successfully fetched appointments",
+			});
+		} catch (error) {
+			console.log(error);
 		}
 	}
 }

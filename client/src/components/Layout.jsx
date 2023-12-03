@@ -5,7 +5,7 @@ import {AdminMenu, UserMenu, DoctorMenu} from "../menu-data/MenuData";
 import {useSelector, useDispatch} from "react-redux";
 import {message, Badge} from "antd";
 import {setUser} from "../redux/features/userSlice";
-
+import doctorSVg from "../../public/doctor.svg";
 const Layout = ({children}) => {
 	const {user} = useSelector((state) => state.auth);
 
@@ -23,7 +23,7 @@ const Layout = ({children}) => {
 
 		{
 			name: "Appointments",
-			path: "/appointments",
+			path: "/doctor/appointments",
 			icon: "fa-solid fa-list",
 		},
 
@@ -51,6 +51,8 @@ const Layout = ({children}) => {
 				{/* Side Bar Section */}
 				<div className="sidebar">
 					<div className="logo">
+						<img style={{width: "70px"}} src={doctorSVg} alt="doctor" />
+
 						<h5>MEDIC APP</h5>
 						<hr />
 					</div>
@@ -88,7 +90,12 @@ const Layout = ({children}) => {
 								></i>
 							</Badge>
 
-							<Link to="/profile">{user && user.email}</Link>
+							<div className="profileName">
+								<Link to="/profile" className="profileName">
+									{user && user.email}
+								</Link>
+								<p>Welcome</p>
+							</div>
 						</div>
 					</div>
 					<div className="body">{children}</div>

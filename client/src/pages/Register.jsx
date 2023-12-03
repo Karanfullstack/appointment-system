@@ -43,6 +43,10 @@ const Register = () => {
 				<Form.Item name="email">
 					<Input type="email" required placeholder="Email" />
 				</Form.Item>
+				<label htmlFor="phone">Phone</label>
+				<Form.Item name="phone">
+					<Input type="text" required placeholder="Phone" />
+				</Form.Item>
 				<label htmlFor="password">Password</label>
 				<Form.Item name="password">
 					<Input type="password" required placeholder="Password" />

@@ -2,11 +2,11 @@ const User = require("../models/userModels");
 const Doctor = require("../models/doctorModels");
 
 class DoctorService {
-	static async applyDoctor(data) {
+	static async applyDoctor(data, userId) {
 		try {
 			// checking if user applied for doctor
-			const doctor = await Doctor.findOne({userId: data.userId});
-
+			const doctor = await Doctor.findOne({userId});
+			console.log(doctor);
 			if (doctor) throw new Error("You already applied for doctor.");
 
 			const newDoctor = new Doctor(data);
@@ -19,10 +19,10 @@ class DoctorService {
 			//  sending notification to admin
 			notification.push({
 				type: "Apply Doctor Request",
-				message: `${doctor.firstName} ${doctor.lastName} has applied for doctor.`,
+				message: `${newDoctor.firstName} ${newDoctor.lastName} has applied for doctor.`,
 				data: {
-					doctorId: doctor._id,
-					name: `${doctor.firstName} ${doctor.lastName}`,
+					doctorId: newDoctor._id,
+					name: `${newDoctor.firstName} ${newDoctor.lastName}`,
 					onClickPath: "/admin/doctor",
 				},
 			});
@@ -33,7 +33,7 @@ class DoctorService {
 			// returning doctor
 			return newDoctor;
 		} catch (error) {
-			throw new Error(error);
+			throw error;
 		}
 	}
 }

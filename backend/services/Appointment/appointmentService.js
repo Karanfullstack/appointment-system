@@ -1,5 +1,6 @@
 const Appointment = require("../../models/appointmentModel");
 const User = require("../../models/userModels");
+const Doctor = require("../../models/doctorModels");
 const moment = require("moment");
 
 class AppointmentService {
@@ -22,17 +23,19 @@ class AppointmentService {
 			if (!user || !doctor) throw new Error("User or Doctor not found");
 			const notification = user.notification;
 			notification.push({
-				type: `Appointment Book at Date: ${
-					newAppointment.date
-				} Time: ${newAppointment.time.toString()}`,
+				type: `Appointment Book For Date: ${moment
+					.utc(newAppointment.date)
+					.format("DD-MM-YYYY")} Time: ${moment
+					.utc(newAppointment.time)
+					.format("HH:mm")}`,
 				message: `"You have booked an appointment with DR. ${newAppointment.doctorInfo.firstName.toUpperCase()} ",`,
 			});
 
 			const doctorNotification = doctor.notification;
 			doctorNotification.push({
-				type: `Appointment Book at Date: ${
-					newAppointment.date
-				} Time: ${newAppointment.time.toString()}`,
+				type: `Appointment Book For Date: ${moment(newAppointment.date).format(
+					"DD-MM-YYYY"
+				)} Time: ${moment(newAppointment.time).format("HH:mm")}`,
 				message: `"You have a new appointment booked by ${newAppointment.userInfo.name.toUpperCase()} ",`,
 			});
 
@@ -76,6 +79,18 @@ class AppointmentService {
 	static async getAppointments(userId) {
 		try {
 			const appointments = await Appointment.find({userId});
+			return appointments;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	// getting all appointments of a doctor
+	static async getDoctorAppointments(userId) {
+		try {
+			const doctor = await Doctor.findOne({userId});
+			if (!doctor) throw new Error("Doctor not found");
+			const appointments = await Appointment.find({doctorId: doctor});
 			return appointments;
 		} catch (error) {
 			throw error;

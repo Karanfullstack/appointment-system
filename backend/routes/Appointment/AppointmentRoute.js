@@ -12,4 +12,11 @@ router.post("/check", AuthMiddleware, AppointmentController.checkAvailbility);
 // Getting All Appointments User Route | Method: GET | "/api/user/appointment/get"
 router.get("/user/get", AuthMiddleware, AppointmentController.getAppointments);
 
+// Getting All Appointments Doctor Route | Method: GET | "/api/doctor/appointment/get"
+router.get(
+	"/doctor/get",
+	AuthMiddleware,
+	AppointmentController.getDoctorAppoinments
+);
+
 module.exports = router;

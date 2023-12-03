@@ -6,6 +6,7 @@ import moment from "moment";
 const Appointments = () => {
 	const [appointments, setAppointments] = useState(null);
 	// getting Appointments from database
+
 	const getAppointments = async (cancelToken) => {
 		try {
 			const response = await axios.get("/api/appointment/user/get", {
@@ -22,6 +23,7 @@ const Appointments = () => {
 			console.log(error);
 		}
 	};
+
 	useEffect(() => {
 		const CancelToken = axios.CancelToken;
 		const source = CancelToken.source();
@@ -30,7 +32,6 @@ const Appointments = () => {
 		return () => source.cancel("Cancelling request");
 	}, []);
 
-	console.log(appointments && appointments);
 	const colums = [
 		{
 			title: "Count",
@@ -48,21 +49,24 @@ const Appointments = () => {
 			title: "Name",
 			dataIndex: "name",
 			key: "name",
+			render: (text, record) => {
+				return <span>{record.doctorInfo.firstName}</span>;
+			},
 		},
 		{
 			title: "Phone",
 			dataIndex: "phone",
 			key: "phone",
-			render:(text, record)=>{
-			 return	<span>{record?.doctorInfo?.phone}</span>
-			}
+			render: (text, record) => {
+				return <span>{record.doctorInfo.phone}</span>;
+			},
 		},
 		{
 			title: "Date",
 			dataIndex: "date",
 			key: "date",
 			render: (text) => {
-				return moment(text).format("DD-MM-YYYY");
+				return moment.utc(text).format("DD-MM-YYYY");
 			},
 		},
 		{
@@ -70,7 +74,7 @@ const Appointments = () => {
 			dataIndex: "time",
 			key: "time",
 			render: (text) => {
-				return <span>{moment(text).format("HH:MM")}</span>;
+				return <span>{moment.utc(text).format("HH:mm")}</span>;
 			},
 		},
 		{
@@ -81,11 +85,14 @@ const Appointments = () => {
 	];
 	return (
 		<Layout>
-			<Table
-				columns={colums}
-				dataSource={appointments && appointments}
-				rowKey={(record) => record._id}
-			/>
+			<h2 className="text-center p-3">Your Appointments</h2>
+			<div className="p-4">
+				<Table
+					columns={colums}
+					dataSource={appointments && appointments}
+					rowKey={(record) => record._id}
+				/>
+			</div>
 		</Layout>
 	);
 };

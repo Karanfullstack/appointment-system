@@ -39,6 +39,7 @@ const BookingPage = () => {
 			}
 		}
 	};
+
 	useEffect(() => {
 		const CancelToken = axios.CancelToken;
 		const source = CancelToken.source();
@@ -122,6 +123,7 @@ const BookingPage = () => {
 	};
 
 	console.log(isEmpty(dates, time));
+
 	return (
 		<Layout>
 			{doctor && (
