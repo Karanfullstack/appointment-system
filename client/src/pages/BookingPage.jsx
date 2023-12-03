@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {showLoading, hideLoading} from "../redux/features/loadingSlice";
 import {PoweroffOutlined} from "@ant-design/icons";
 import axios from "axios";
-
 const BookingPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [isAvilable, setIsAvilable] = useState(false);
@@ -16,25 +15,39 @@ const BookingPage = () => {
 	const [dates, setDates] = useState(null || []);
 	const [time, setTime] = useState(null);
 	const {doctorId} = useParams();
-	console.log("date", dates);
-	console.log("time", time);
+
 	// Get Doctor Details By ID
-	const getDoctorDetails = async () => {
+	const getDoctorDetails = async (cancelToken) => {
 		try {
-			const response = await axios.get(`/api/doctor/get-doctor/${doctorId}`, {
-				headers: {
-					Authorization: localStorage.getItem("token"),
-				},
-			});
+			const response = await axios.get(
+				`/api/doctor/get-doctor/${doctorId}`,
+
+				{
+					headers: {
+						Authorization: localStorage.getItem("token"),
+					},
+					cancelToken: cancelToken,
+				}
+			);
 
 			if (response.status === 200) setDoctor(response.data.data);
 		} catch (error) {
-			console.log(error);
+			if (axios.isCancel(error)) {
+				console.log("Request canceled", error.message);
+			} else {
+				console.log(error);
+			}
 		}
 	};
 	useEffect(() => {
-		getDoctorDetails();
-	}, []);
+		const CancelToken = axios.CancelToken;
+		const source = CancelToken.source();
+
+		getDoctorDetails(source.token);
+		return () => {
+			source.cancel("Operation canceled");
+		};
+	}, [doctorId]);
 
 	// Book Appointment Function
 	const bookAppointment = async () => {
@@ -86,14 +99,14 @@ const BookingPage = () => {
 
 			setTimeout(() => {
 				setLoading(false);
-				setIsAvilable(response.data.data.isAvailable);
+
 				if (response.data.data.isAvailable) {
+					setIsAvilable(response.data.data.isAvailable);
 					message.success("Slot is Available");
 				} else {
 					message.error("Slot is not Available");
 				}
-				console.log(response.data.data.isAvailable);
-			}, 4000);
+			}, 3000);
 		} catch (error) {
 			setLoading(false);
 			console.log(error);

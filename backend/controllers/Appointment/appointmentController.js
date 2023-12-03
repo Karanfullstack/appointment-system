@@ -28,6 +28,27 @@ class AppointmentController {
 			console.log(error);
 		}
 	}
+
+	// getting all appointments for user
+	static async getAppointments(req, res) {
+		try {
+			const userId = req.user.id;
+			const appointments = await AppointmentService.getAppointments(userId);
+			if (!appointments) {
+				return res
+					.status(404)
+					.json({status: 404, message: "No appointments found"});
+			}
+			return res.status(200).json({
+				count: appointments.length,
+				status: 200,
+				data: appointments,
+				message: "Successfully fetched appointments",
+			});
+		} catch (error) {
+			return res.status(500).json({status: 500, message: error});
+		}
+	}
 }
 
 module.exports = AppointmentController;

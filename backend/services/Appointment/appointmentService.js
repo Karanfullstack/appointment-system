@@ -4,15 +4,13 @@ const moment = require("moment");
 
 class AppointmentService {
 	static async createAppointment(appointment) {
-		console.log(appointment);
 		try {
-			console.log(appointment.time);
 			const newAppointment = new Appointment({
 				userId: appointment.userId,
 				doctorId: appointment.doctorId,
 				userInfo: appointment.userInfo,
 				doctorInfo: appointment.doctorInfo,
-				date: moment.utc(appointment.date, "YYYY-MM-DD").toISOString(),
+				date: moment.utc(appointment.date, "DD-MM-YYYY").toISOString(),
 				time: moment.utc(appointment.time, "HH:mm", "UTC").toISOString(),
 			});
 
@@ -70,6 +68,15 @@ class AppointmentService {
 			const isAvailable = !appointment;
 			console.log(isAvailable);
 			return {isAvailable, appointment};
+		} catch (error) {
+			throw error;
+		}
+	}
+	// getting all appointments of a user
+	static async getAppointments(userId) {
+		try {
+			const appointments = await Appointment.find({userId});
+			return appointments;
 		} catch (error) {
 			throw error;
 		}

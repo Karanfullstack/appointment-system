@@ -7,7 +7,7 @@ export const UserMenu = [
 
 	{
 		name: "Appointments",
-		path: "/appointments",
+		path: "/user/appointments",
 		icon: "fa-solid fa-list",
 	},
 	{
