@@ -96,6 +96,35 @@ class AppointmentService {
 			throw error;
 		}
 	}
+
+	// getting approved appointments
+	static async approveAppointments(appointmentId, doctorId) {
+		try {
+			const doctor = await User.findOne({_id: doctorId, isDoctor: true});
+			if (!doctor) throw new Error("Doctor not found");
+			const appointment = await Appointment.findOneAndUpdate(
+				{_id: appointmentId},
+				{status: "approved"},
+				{new: true}
+			);
+
+			const user = await User.findOne({_id: appointment.userId});
+			const notification = user.notification;
+
+			notification.push({
+				type: `Appointment Approved For Date: ${moment
+					.utc(appointment.date)
+					.format("DD-MM-YYYY")} Time: ${moment
+					.utc(appointment.time)
+					.format("HH:mm")}`,
+				message: `"Your appointment with DR. ${appointment.doctorInfo.firstName.toUpperCase()} has been approved",`,
+			});
+			await User.findOneAndUpdate({_id: user._id}, {notification}, {new: true});
+			return appointment;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 
 module.exports = AppointmentService;

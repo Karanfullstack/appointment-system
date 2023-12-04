@@ -59,6 +59,23 @@ class UserService {
 			throw new Error(error);
 		}
 	}
+
+	// Update User Profile
+	static async updateUserProfile(data, userId) {
+		try {
+			const updatedUser = {};
+			if (data.name) updatedUser.name = data.name;
+			if (data.phone) updatedUser.phone = data.phone;
+			const user = await User.findOneAndUpdate(
+				{_id: userId},
+				{$set: updatedUser},
+				{new: true}
+			);
+			return user;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 
 module.exports = UserService;

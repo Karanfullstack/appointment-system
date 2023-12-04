@@ -29,7 +29,7 @@ const Layout = ({children}) => {
 
 		{
 			name: "Profile",
-			path: `/profile/${user && user._id}`,
+			path: `/profile/doctor/${user && user._id}`,
 			icon: "fa-solid fa-user",
 		},
 	];

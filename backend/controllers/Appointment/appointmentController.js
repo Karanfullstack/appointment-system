@@ -4,7 +4,10 @@ class AppointmentController {
 	static async createAppointment(req, res) {
 		try {
 			const userId = req.body.id;
-			const appointment = await AppointmentService.createAppointment(req.body,userId);
+			const appointment = await AppointmentService.createAppointment(
+				req.body,
+				userId
+			);
 			return res.status(200).json({
 				status: 200,
 				data: appointment,
@@ -68,6 +71,30 @@ class AppointmentController {
 			});
 		} catch (error) {
 			console.log(error);
+		}
+	}
+	// getting  approved appointments
+	static async approveAppointments(req, res) {
+		try {
+			const {appointmentId} = req.body;
+			const doctorId = req.user.id;
+			const appointment = await AppointmentService.approveAppointments(
+				appointmentId,
+				doctorId
+			);
+			if (appointment.status === "Approved") {
+				return res
+					.status(200)
+					.json({message: "Appointment is already approved"});
+			}
+			return res.status(200).json({
+				status: 200,
+				data: appointment,
+				message: "Successfully approved appointments",
+			});
+		} catch (error) {
+			console.log(error);
+			res.status(500).json({status: 500, message: error});
 		}
 	}
 }

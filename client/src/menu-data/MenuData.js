@@ -17,7 +17,7 @@ export const UserMenu = [
 	},
 	{
 		name: "Profile",
-		path: "/profile",
+		path: "/profile/user",
 		icon: "fa-solid fa-user",
 	},
 ];
@@ -64,7 +64,7 @@ export const DoctorMenu = [
 
 	{
 		name: "Profile",
-		path: "/profile/",
+		path: "/profile/doctor",
 		icon: "fa-solid fa-user",
 	},
 ];

@@ -19,4 +19,10 @@ router.get(
 	AppointmentController.getDoctorAppoinments
 );
 
+// Getting Appointments Approved Route | Method: PUT | "/api/appointment/approved"
+router.put(
+	"/approved",
+	AuthMiddleware,
+	AppointmentController.approveAppointments
+);
 module.exports = router;

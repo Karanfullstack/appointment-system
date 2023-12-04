@@ -41,12 +41,28 @@ class AuthController {
 			console.log(req.user);
 			const {password, ...result} = user._doc;
 
-			res
-				.status(200)
-				.json({success: true, data: {result}});
+			res.status(200).json({success: true, data: {result}});
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({success: false, message: error.message});
+		}
+	}
+
+	// Updating User Profile Controller
+	static async updateUserProfile(req, res) {
+		try {
+			const userId = req.user.id;
+			const data = req.body;
+			const user = await userService.updateUserProfile(data, userId);
+			res.status(201).json({
+				message: "Update Success",
+				user,
+			});
+		} catch (error) {
+			res.status(500).json({
+				message: "Something went wrong in update user",
+				error,
+			});
 		}
 	}
 }

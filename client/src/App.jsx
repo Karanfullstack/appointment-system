@@ -9,6 +9,7 @@ import DoctorProfile from "./pages/DoctorProfile";
 import BookingPage from "./pages/BookingPage";
 import Appointments from "./pages/Appointments";
 import DoctorAppointment from "./pages/DoctorAppointment";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
 	const {loading} = useSelector((state) => state.loading);
@@ -71,7 +72,7 @@ function App() {
 					/>
 
 					<Route
-						path="profile/:id"
+						path="profile/doctor/:id"
 						element={
 							<ProtectedRoutes>
 								<DoctorProfile />
@@ -109,6 +110,14 @@ function App() {
 						element={
 							<ProtectedRoutes>
 								<DoctorAppointment />
+							</ProtectedRoutes>
+						}
+					/>
+					<Route
+						path="/profile/user"
+						element={
+							<ProtectedRoutes>
+								<UserProfile />
 							</ProtectedRoutes>
 						}
 					/>

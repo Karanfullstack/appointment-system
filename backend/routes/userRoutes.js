@@ -12,4 +12,6 @@ router.post("/login", AuthController.loginUser);
 // Authenticate User Route || GET /api/user/auth
 router.get("/auth", authMiddleware, AuthController.AuthenticateUser);
 
+// Updating User Profile Route || PUT /api/user/update
+router.put("/update", authMiddleware, AuthController.updateUserProfile);
 module.exports = router;
