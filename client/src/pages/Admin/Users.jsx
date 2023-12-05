@@ -1,9 +1,34 @@
 import Layout from "../../components/Layout";
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import {Table} from "antd";
+import {Table, message} from "antd";
 const Users = () => {
 	const [users, setUsers] = useState([]);
+	const [flag, setFlag] = useState(false);
+	// block user function
+	const blockUser = async (userId) => {
+		try {
+			const response = await axios.put(
+				"/api/admin/block-user",
+				{userId},
+				{
+					headers: {
+						Authorization: localStorage.getItem("token"),
+					},
+				}
+			);
+			setFlag(!flag);
+			const {data} = response;
+			if (data.user.isBlocked) {
+				message.success("User Blocked Successfully");
+			} else {
+				message.success("User Unblocked Successfully");
+			}
+			console.log(data);
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
 
 	// Function to get all users
 	const getUsers = async () => {
@@ -25,7 +50,7 @@ const Users = () => {
 
 	useEffect(() => {
 		getUsers();
-	}, []);
+	}, [flag]);
 	console.log(users);
 
 	// Data to be displayed in the table
@@ -46,7 +71,12 @@ const Users = () => {
 				return <span>{record.email.toUpperCase()}</span>;
 			},
 		},
-
+{
+			title: "Blocked",
+			dataIndex: "isBlocked",
+			key: "isBlocked",
+			render: (text, record) => <span>{record.isBlocked ? "YES" : "NO"}</span>,
+		},
 		{
 			title: "Doctor",
 			dataIndex: "isDoctor",
@@ -59,7 +89,21 @@ const Users = () => {
 			key: "actions",
 			render: (text, record) => (
 				<div className="d-flex">
-					<button className="btn btn-danger">Block</button>
+					{record.isBlocked ? (
+						<button
+							onClick={() => blockUser(record._id)}
+							className="btn btn-success"
+						>
+							Unblock
+						</button>
+					) : (
+						<button
+							onClick={() => blockUser(record._id)}
+							className="btn btn-dark"
+						>
+							Block
+						</button>
+					)}
 				</div>
 			),
 		},

@@ -31,6 +31,16 @@ class AdminController {
 			return res.status(500).json({success: false, error});
 		}
 	}
+	// Block user controller
+	static async blockUser(req, res) {
+		try {
+			const {userId} = req.body;
+			const user = await AdminService.blockUserService(userId);
+			return res.status(200).json({success: true, user});
+		} catch (error) {
+			console.log(error);
+		}
+	}
 }
 
 module.exports = AdminController;

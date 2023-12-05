@@ -91,7 +91,7 @@ const Layout = ({children}) => {
 							</Badge>
 
 							<div className="profileName">
-								<Link to="/profile" className="profileName">
+								<Link to="/profile/user" className="profileName">
 									{user && user.email}
 								</Link>
 								<p>Welcome</p>

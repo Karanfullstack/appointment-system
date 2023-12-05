@@ -77,11 +77,12 @@ const DoctorProfile = () => {
 							<Col xs={24} md={24} lg={8}>
 								<Form.Item
 									name="firstName"
+							
 									label="First Name"
 									required
 									rules={[{required: true}]}
 								>
-									<Input placeholder="First Name" />
+									<Input placeholder="First Name" disabled={doctor.firstName} />
 								</Form.Item>
 							</Col>
 							<Col xs={24} md={24} lg={8}>
@@ -123,7 +124,7 @@ const DoctorProfile = () => {
 									required
 									rules={[{required: true}]}
 								>
-									<Input placeholder="Email" />
+									<Input placeholder="Email" disabled={doctor.email} />
 								</Form.Item>
 							</Col>
 

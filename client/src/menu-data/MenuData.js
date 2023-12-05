@@ -42,7 +42,7 @@ export const AdminMenu = [
 	},
 	{
 		name: "Profile",
-		path: "/profile",
+		path: "/profile/user",
 		icon: "fa-solid fa-user",
 	},
 ];

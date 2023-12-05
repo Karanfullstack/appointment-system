@@ -30,7 +30,7 @@ class UserService {
 		try {
 			// check if user exists
 			const user = await User.findOne({email: userData.email});
-
+			
 			if (!user) throw new Error("User does not exist");
 
 			// check if password is correct

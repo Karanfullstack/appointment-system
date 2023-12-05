@@ -52,6 +52,21 @@ class AdminService {
 			throw error;
 		}
 	}
+
+	// Block User Service
+	static async blockUserService(userId) {
+		try {
+			const user = await User.findById(userId);
+			const updateUser = User.findOneAndUpdate(
+				{_id: user._id},
+				{isBlocked: user.isBlocked ? false : true},
+				{new: true}
+			);
+			return updateUser;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 
 module.exports = AdminService;
